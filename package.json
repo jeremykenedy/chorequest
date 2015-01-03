@@ -4,8 +4,7 @@
     "description": "An adventure game to encourage kids to do their chores.",
     "main": "app.js",
     "scripts": {
-        "start": "node app.js",
-        "test": "gulp test"
+        "start": "node app.js"
     },
     "repository": {
         "type": "git",
