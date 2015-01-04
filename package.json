@@ -4,7 +4,8 @@
   "description": "An adventure game to encourage kids to do their chores.",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -52,5 +53,8 @@
     "request": "^2.51.0",
     "through2": "^0.6.3",
     "vinyl-source-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
   }
 }
