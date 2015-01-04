@@ -49,3 +49,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+# App Specific Ignores
+config.json
