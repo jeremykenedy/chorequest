@@ -2,8 +2,11 @@
 
 var self = this,
     mongoose = require('mongoose'),
+    s = require('./db_schemas'),
     c = require('nconf'),
     _ = require('lodash');
+
+var seeded = false;
 
 c.env().file({ file: 'config.json'});
 
@@ -13,43 +16,18 @@ mongoose.connect(uristring, function (err, res) {
     if (err) {
         console.log ('ERROR connecting to: ' + uristring + '. ' + err);
     } else {
-        console.log ('Succeeded connected to: ' + uristring);
+        console.log ('Successfully connected to: ' + uristring);
     }
-});
-
-var accountSchema = new mongoose.Schema({
-    accountid: { type: Number }
-});
-
-var userSchema = new mongoose.Schema({
-    userid: { type: Number },
-    username: { type: String },
-    password: { type: String },
-    accountid: { type: Number },
-    roleid: { type: Number }
-});
-
-var roleSchema = new mongoose.Schema({
-    roleid: { type: Number },
-    name: { type: String },
-    permissions: { type: Number }
 });
 
 self.models = {
-    Accounts: mongoose.model('Accounts', accountSchema),
-    Users: mongoose.model('Users', userSchema),
-    Roles: mongoose.model('Roles', roleSchema)
+    Accounts: mongoose.model('Accounts', s.accountSchema),
+    Roles: mongoose.model('Roles', s.roleSchema)
 };
 
-var newUser = new self.models.Users({userid: 1, username: 'admin', password: 'password', accountid: 0, roleid: 1});
-newUser.save(function (err) {
-    if (err) {
-        // Consider silencing this.
-        console.error('Error saving user. / ' + err);
-    }
-});
-
 self.getCollection = function (entity, callback) {
+    seedDB();
+
     var model = self.models[entity];
     model.find(function (err, response) {
         if(err) {
@@ -63,6 +41,8 @@ self.getCollection = function (entity, callback) {
 };
 
 self.getItem = function (entity, search, callback) {
+    seedDB();
+
     var model = self.models[entity];
     model.findOne(search, function(err, response) {
         if(err) {
@@ -74,3 +54,41 @@ self.getItem = function (entity, search, callback) {
         }
     });
 };
+
+function seedDB () {
+    if (!seeded) {
+        var seedRole = new self.models.Roles({
+            role_id: 1,
+            name: 'admin',
+            permissions: -1
+        });
+
+        var seedAccount = new self.models.Accounts({
+            account_id: 1,
+            createDate: new Date(),
+            active: true,
+            users: [
+                {
+                    user_id: 1,
+                    username: 'admin',
+                    password: 'password',
+                    role_id: 1
+                }
+            ]
+        });
+        seedRole.save(function (err) {
+            if(!err) {
+                seeded = true;
+                seedAccount.save(function (err) {
+                    if(!err) {
+                        console.log('user created');
+                    } else {
+                        console.log('error creating account');
+                    }
+                });
+            } else {
+                console.log('error creating role');
+            }
+        });
+    }
+}

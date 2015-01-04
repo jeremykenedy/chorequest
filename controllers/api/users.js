@@ -5,7 +5,7 @@ var self = this,
     db = require('../../modules/db');
 
 self.getUsers = function (req, res) {
-    db.getCollection('Users', function (err, data) {
+    db.getCollection('Accounts', function (err, data) {
         if (err) {
             var msg = {
                 status: 'fail',
@@ -23,7 +23,7 @@ self.getUsers = function (req, res) {
 
 self.getUserByID = function (req, res) {
     var id = req.params.id;
-    db.getItem('Users', { userid: id }, function (err, data) {
+    db.getItem('Accounts', { account_id: id }, function (err, data) {
         if (err) {
             var msg = {
                 status: 'fail',
