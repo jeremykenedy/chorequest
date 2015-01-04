@@ -6,28 +6,29 @@ var self = this,
     c = require('nconf'),
     _ = require('lodash');
 
-var seeded = false;
-
 c.env().file({ file: 'config.json'});
 
-var uristring = c.get('MONGOLAB_URI');
+var uristring = c.get('MONGOLAB_URI'),
+    schema_version = 1;
 
-mongoose.connect(uristring, function (err, res) {
-    if (err) {
-        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-    } else {
-        console.log ('Successfully connected to: ' + uristring);
-    }
-});
-
+// Models
 self.models = {
     Accounts: mongoose.model('Accounts', s.accountSchema),
     Roles: mongoose.model('Roles', s.roleSchema)
 };
 
-self.getCollection = function (entity, callback) {
-    seedDB();
+// Connect
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        seedDB();
+        console.log ('Successfully connected to: ' + uristring);
+    }
+});
 
+// Get
+self.getCollection = function (entity, callback) {
     var model = self.models[entity];
     model.find(function (err, response) {
         if(err) {
@@ -41,8 +42,6 @@ self.getCollection = function (entity, callback) {
 };
 
 self.getItem = function (entity, search, callback) {
-    seedDB();
-
     var model = self.models[entity];
     model.findOne(search, function(err, response) {
         if(err) {
@@ -55,6 +54,7 @@ self.getItem = function (entity, search, callback) {
     });
 };
 
+var seeded = false;
 function seedDB () {
     if(!seeded) {
         seeded = true;
@@ -63,7 +63,8 @@ function seedDB () {
                 var seedRole = new self.models.Roles({
                     role_id: 1,
                     name: 'admin',
-                    permissions: -1
+                    permissions: -1,
+                    schema_version: schema_version
                 });
 
                 var seedAccount = new self.models.Accounts({
@@ -77,7 +78,8 @@ function seedDB () {
                             password: 'password',
                             role_id: 1
                         }
-                    ]
+                    ],
+                    schema_version: schema_version
                 });
                 seedRole.save(function (err) {
                     if(!err) {

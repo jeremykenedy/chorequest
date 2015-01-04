@@ -18,8 +18,11 @@ app.set('view engine', 'jade');
 
 // Routes
 app.get('/', home.index);
-app.get('/users', api.users.getUsers);
-app.get('/users/:username', api.users.getUserByUsername);
+app.get('/accounts', api.accounts.getAccounts);
+app.get('/accounts/:id', api.accounts.getAccountByID);
+app.get('/accounts/:id/users', api.accounts.getAccountUsers);
+app.get('/accounts/user/:username', api.accounts.getAccountByUsername);
+app.get('/users/:username', api.users.getUser);
 
 // Start server
 app.listen(process.env.PORT || port);

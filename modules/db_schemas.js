@@ -4,11 +4,13 @@ var self = this,
     mongoose = require('mongoose'),
     bcrypt = require('bcrypt');
 
-
+// TODO: Setup migrations (schema versioning)
+// http://derickrethans.nl/managing-schema-changes.html
 self.roleSchema = new mongoose.Schema({
     role_id: { type: Number, required: true, index: { unique: true } },
     name: { type: String, required: true },
-    permissions: { type: Number }
+    permissions: { type: Number },
+    schema_version: { type: Number, required: true }
 });
 
 self.userSchema = new mongoose.Schema({
@@ -44,5 +46,6 @@ self.accountSchema = new mongoose.Schema({
     account_id: { type: Number, required: true, index: { unique: true } },
     createDate: { type: Date, required: true },
     active: { type: Boolean, required: true },
-    users: [self.userSchema]
+    users: [self.userSchema],
+    schema_version: { type: Number, required: true }
 });
