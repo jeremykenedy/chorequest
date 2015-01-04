@@ -56,38 +56,44 @@ self.getItem = function (entity, search, callback) {
 };
 
 function seedDB () {
-    if (!seeded) {
-        var seedRole = new self.models.Roles({
-            role_id: 1,
-            name: 'admin',
-            permissions: -1
-        });
+    if(!seeded) {
+        seeded = true;
+        self.getItem('Roles', { "role_id": 1 }, function (err, response) {
+            if(err) {
+                var seedRole = new self.models.Roles({
+                    role_id: 1,
+                    name: 'admin',
+                    permissions: -1
+                });
 
-        var seedAccount = new self.models.Accounts({
-            account_id: 1,
-            createDate: new Date(),
-            active: true,
-            users: [
-                {
-                    user_id: 1,
-                    username: 'admin',
-                    password: 'password',
-                    role_id: 1
-                }
-            ]
-        });
-        seedRole.save(function (err) {
-            if(!err) {
-                seeded = true;
-                seedAccount.save(function (err) {
+                var seedAccount = new self.models.Accounts({
+                    account_id: 1,
+                    createDate: new Date(),
+                    active: true,
+                    users: [
+                        {
+                            user_id: 1,
+                            username: 'admin',
+                            password: 'password',
+                            role_id: 1
+                        }
+                    ]
+                });
+                seedRole.save(function (err) {
                     if(!err) {
-                        console.log('user created');
+                        seedAccount.save(function (err) {
+                            if(!err) {
+                                console.log('user created');
+                            } else {
+                                console.log('error creating account');
+                            }
+                        });
                     } else {
-                        console.log('error creating account');
+                        console.log('error creating role');
                     }
                 });
             } else {
-                console.log('error creating role');
+                console.log('seed data exists')
             }
         });
     }
