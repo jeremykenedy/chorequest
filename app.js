@@ -19,7 +19,7 @@ app.set('view engine', 'jade');
 // Routes
 app.get('/', home.index);
 app.get('/users', api.users.getUsers);
-app.get('/users/:id', api.users.getUserByID);
+app.get('/users/:username', api.users.getUserByUsername);
 
 // Start server
 app.listen(process.env.PORT || port);

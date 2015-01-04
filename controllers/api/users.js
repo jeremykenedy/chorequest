@@ -21,9 +21,9 @@ self.getUsers = function (req, res) {
     });
 };
 
-self.getUserByID = function (req, res) {
-    var id = req.params.id;
-    db.getItem('Accounts', { account_id: id }, function (err, data) {
+self.getUserByUsername = function (req, res) {
+    var username = req.params.username;
+    db.getItem('Accounts', { "users.username": username }, function (err, data) {
         if (err) {
             var msg = {
                 status: 'fail',
