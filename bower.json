@@ -1,0 +1,36 @@
+{
+  "name": "chorequest",
+  "version": "0.0.1",
+  "homepage": "https://github.com/kenhowardpdx/chorequest",
+  "authors": [
+    "Ken Howard <kenh@csgpro.com>"
+  ],
+  "description": "An adventure game to encourage kids to do their chores.",
+  "main": "app.js",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "game",
+    "kids",
+    "adventure",
+    "chores",
+    "node",
+    "angularjs"
+  ],
+  "license": "WTFPL",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.3.8",
+    "angular-route": "~1.3.8",
+    "angular-material": "~0.6.1",
+    "angular-mocks": "~1.3.8"
+  }
+}

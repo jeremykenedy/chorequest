@@ -2,27 +2,34 @@
 
 // Dependencies
 var express = require('express'),
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 // Controllers
-var api = require('./controllers/api'),
-    home = require('./controllers/home');
+var api = require('./controllers/api');
 
 // Application
 var app = module.exports.app = exports.app = express(),
     port = 3000;
 
 // Middleware
-app.set('views', __dirname + '/templates');
-app.set('view engine', 'jade');
+app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-app.get('/', home.index);
+// API Routes
 app.get('/accounts', api.accounts.getAccounts);
 app.get('/accounts/:id', api.accounts.getAccountByID);
 app.get('/accounts/:id/users', api.accounts.getAccountUsers);
 app.get('/accounts/user/:username', api.accounts.getAccountByUsername);
 app.get('/users/:username', api.users.getUser);
+
+// Static Routes
+app.use("/js", express.static(__dirname + '/public/js'));
+app.use("/images", express.static(__dirname + '/public/images'));
+app.use("/css", express.static(__dirname + '/public/css'));
+app.use("/fonts", express.static(__dirname + '/public/fonts'));
+
+// Angular Routes
+app.use("/*", express.static(__dirname + '/public/index.html'));
 
 // Start server
 app.listen(process.env.PORT || port);

@@ -52,3 +52,10 @@ Temporary Items
 
 # App Specific Ignores
 config.json
+public/css/*.css
+public/js/*.js
+public/fonts/*
+public/images/app/*.jpg
+public/images/app/*.png
+public/images/app/*.gif
+public/index.html
