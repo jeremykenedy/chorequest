@@ -5,8 +5,9 @@ var self = this,
     db = require('../../modules/db');
 
 self.getUser = function (req, res) {
-    var username = req.params.username;
-    db.getItem('Accounts', { "users.username": username }, function (err, data) {
+    var username = req.params.username,
+        userExp = new RegExp('^' + username + '$', 'i');
+    db.getItem('Accounts', { "users.username": userExp }, function (err, data) {
         if (err || !data.users.length) {
             var msg = {
                 status: 'fail',
@@ -15,7 +16,9 @@ self.getUser = function (req, res) {
             };
             res.send(JSON.stringify(msg));
         } else {
-            var user = _.findWhere(data.users, { username: username });
+            var user = _.findWhere(data.users, function (user) {
+                return user.username.toLowerCase() === username.toLowerCase();
+            });
             res.send(user);
         }
     });
