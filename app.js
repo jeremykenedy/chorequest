@@ -20,6 +20,7 @@ app.get('/accounts', api.accounts.getAccounts);
 app.get('/accounts/:id', api.accounts.getAccountByID);
 app.get('/accounts/:id/users', api.accounts.getAccountUsers);
 app.get('/accounts/user/:username', api.accounts.getAccountByUsername);
+app.get('/users', api.users.getUsers);
 app.get('/users/:username', api.users.getUser);
 
 // Static Routes
