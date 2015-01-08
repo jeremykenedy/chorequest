@@ -33,10 +33,19 @@ self.getCollection = function (entity, callback) {
     model.find(function (err, response) {
         if(err) {
             callback(err);
-        } else if (response !== null) {
-            callback(null, response);
         } else {
-            callback(new Error('Error retrieving data.'));
+            callback(null, response);
+        }
+    });
+};
+
+self.getDistinct = function (entity, key, callback) {
+    var model = self.models[entity];
+    model.find().distinct(key, function (err, response) {
+        if(err) {
+            callback(err);
+        } else {
+            callback(null, response);
         }
     });
 };
@@ -46,10 +55,8 @@ self.getItem = function (entity, search, callback) {
     model.findOne(search, function(err, response) {
         if(err) {
             callback(err);
-        } else if (response !== null) {
-            callback(null, response);
         } else {
-            callback(new Error('Error retrieving data.'));
+            callback(null, response);
         }
     });
 };
