@@ -55,7 +55,9 @@ gulp.task('scripts', ['copy-index'], function () {
         './bower_components/angular-animate/angular-animate.js',
         './bower_components/angular-aria/angular-aria.js',
         './bower_components/hammerjs/hammer.js',
-        './bower_components/angular-material/angular-material.js'
+        './bower_components/angular-material/angular-material.js',
+        './bower_components/angular-messages/angular-messages.js',
+        './bower_components/satellizer/satellizer.js'
     ];
 
     if (plugins.util.env.type === 'production') {
@@ -119,24 +121,22 @@ gulp.task('clean:images', function () {
         ], { force: true });
 });
 
-gulp.task('watch',function() {
-    plugins.livereload.listen();
-    gulp.watch([
-        appBuildDir + '**/*.html',
-        appBuildDir + '**/*.js',
-        appBuildDir + '**/*.css'], function (event) {
-            setTimeout(function() {
-                plugins.livereload.changed(event);
-            }, 1000);
-        });
+gulp.task('watch', function() {
+    gulp.watch([appSrcDir + '**/*.js', appSrcDir + '**/*.html'], ['scripts']);
+    gulp.watch([appSrcDir + '**/*.less', appSrcDir + '**/*.css'], ['css']);
 });
 
 gulp.task('connect', function() {
-    plugins.nodemon({ script: 'app.js', ext: 'html js', ignore: ['./public/**'] })
-    .on('change', [])
-    .on('restart', function () {
-        console.log('restarted!')
-    })
+    plugins.express.run({
+        file: 'app.js'
+    });
+    // Restart the server when file changes
+    gulp.watch([
+        appBuildDir + '**/*.html',
+        appBuildDir + '**/*.js',
+        appBuildDir + '**/*.css',
+        appBuildDir + 'images/**/*'], plugins.express.notify);
+    gulp.watch(['app.js', 'controllers/**/*.js', 'modules/**/*.js'], [plugins.express.run]);
 });
 
 gulp.task('default', ['scripts', 'css', 'fonts']);
