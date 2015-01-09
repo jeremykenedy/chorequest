@@ -6,6 +6,10 @@ deploy:
   provider: heroku
   api_key:
     secure: MNRhT5Yq/72ezi46zWZs+HYWajnwBaQhZGYoFqXKJwcioSCFvEZ6CfQfXfDr//7S0tOHGnLazSKRRTxnu+waa0HBhs4PHJ8XLUM/2Ks04IkFnETDJojAMhdZcSnnhz3Bg7bKSpWf3yt+2t9B4P1JCV890W58NofdYgAYCLQUQGM=
-  app: chorequest
+  app:
+      master: chorequest
   on:
     repo: kenhowardpdx/chorequest
+branches:
+  only:
+    - master
