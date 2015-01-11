@@ -4,16 +4,15 @@
     angular.module('app')
         .controller('AppController', AppController);
 
-    AppController.$inject = ['$rootScope'];
+    AppController.$inject = ['$rootScope', '$route', 'CONFIG'];
 
-    function AppController ($rootScope) {
-        var self = this,
-            config = {
-                siteName: 'Chore Quest'
-            };
+    function AppController ($rootScope, $route, CONFIG) {
+        var self = this;
 
-        self.title = ($rootScope.pageTitle && config.siteName ? $rootScope.pageTitle + ' | ' + config.siteName : null) || '...';
-
+        $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+            var pageTitle = $route.current.title ? $route.current.title : 'Unknown';
+            self.title = pageTitle + ' | ' + CONFIG.siteName;
+        });
     }
 
 })();

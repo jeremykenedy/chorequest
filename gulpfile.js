@@ -7,17 +7,6 @@ var gulp = require('gulp'),
     appSrcDir = './app/',
     appBuildDir = './public/';
 
-// gulp.task('test', ['scripts'], function () {
-//     return gulp.src('not-found.js')
-//     .pipe(plugins.karma({
-//         configFile: 'karma.conf.js',
-//         action: 'run'
-//     }))
-//     .on('error', function (err) {
-//         throw err;
-//     });
-// });
-
 gulp.task('css', ['vendorCSS'], function () {
     return gulp.src(appSrcDir + 'app.less')
         .pipe(plugins.less())
@@ -47,7 +36,7 @@ gulp.task('copy-index', ['clean:js'], function () {
         .pipe(gulp.dest(appBuildDir));
 });
 
-gulp.task('scripts', ['copy-index'], function () {
+gulp.task('scripts', ['copy-index', 'config'], function () {
 
     var libSrc = [
         './bower_components/angular/angular.js',
@@ -137,6 +126,16 @@ gulp.task('connect', function() {
         appBuildDir + '**/*.css',
         appBuildDir + 'images/**/*'], plugins.express.notify);
     gulp.watch(['app.js', 'controllers/**/*.js', 'modules/**/*.js'], [plugins.express.run]);
+});
+
+gulp.task('config', function() {
+    var env = plugins.util.env.type ? 'production' : 'develop';
+    gulp.src(appSrcDir + 'config.json')
+        .pipe(plugins.ngConstant({
+            constants: { ENV: env }
+        }))
+        // Writes config.js to dist/ folder
+        .pipe(gulp.dest(appBuildDir + 'js'));
 });
 
 gulp.task('default', ['scripts', 'css', 'fonts']);
