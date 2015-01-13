@@ -10,6 +10,8 @@
 </head>
 <body>
 
+    <ng-include src="'navbar/navbar.html'" ng-controller="NavController as nav"></ng-include>
+    
     <div class="container main" ng-view=""></div>
 
     <!-- vendor:js -->
@@ -17,6 +19,9 @@
 
     <!-- templates:js -->
     <!-- endinject -->
+
+    <!-- config -->
+    <script src="js/config.js"></script>
 
     <!-- app:js -->
     <!-- endinject -->

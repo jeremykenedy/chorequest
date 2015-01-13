@@ -1,9 +1,16 @@
-'use strict';
+'use strict';	
 
 // Dependencies
 var express = require('express'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    c = require('nconf');
+
+c.env().file({ file: 'config.json'});
+
+if (c.get('ENV') === 'production') {
+	require('newrelic');
+}
 
 // Controllers
 var api = require('./controllers/api');
@@ -30,6 +37,7 @@ app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
 
 // Angular Routes
+app.use("/", express.static(__dirname + '/public/index.html'));
 app.use("/*", express.static(__dirname + '/public/index.html'));
 
 // Start server

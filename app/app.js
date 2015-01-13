@@ -1,7 +1,7 @@
 (function () {
     'use strict';
 
-    angular.module('app', ['ngRoute', 'ngAria', 'ngMaterial', 'ngAnimate', 'ngMessages', 'templates', 'satellizer'])
+    angular.module('app', ['site-config'])
         .config(['$routeProvider', '$locationProvider', '$authProvider', function ($routeProvider, $locationProvider) {
             $routeProvider
             .when('/', {
