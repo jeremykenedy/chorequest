@@ -1,9 +1,16 @@
-'use strict';
+'use strict';	
 
 // Dependencies
 var express = require('express'),
     fs = require('fs'),
-    path = require('path');
+    path = require('path'),
+    c = require('nconf');
+
+c.env().file({ file: 'config.json'});
+
+if (c.get('ENV') === 'production') {
+	require('newrelic');
+}
 
 // Controllers
 var api = require('./controllers/api');
