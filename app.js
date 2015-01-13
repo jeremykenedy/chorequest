@@ -37,6 +37,7 @@ app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
 
 // Angular Routes
+app.use("/", express.static(__dirname + '/public/index.html'));
 app.use("/*", express.static(__dirname + '/public/index.html'));
 
 // Start server
