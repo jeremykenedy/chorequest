@@ -17,7 +17,7 @@ var api = require('./controllers/api');
 
 // Application
 var app = module.exports.app = exports.app = express(),
-    port = 3000;
+    port = process.env.PORT || 3000;
 
 // Middleware
 app.use(express.static(path.join(__dirname, 'public')));
@@ -37,9 +37,10 @@ app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
 
 // Angular Routes
-app.use("/", express.static(__dirname + '/public/index.html'));
-app.use("/*", express.static(__dirname + '/public/index.html'));
+app.use('/*', function(req, res){
+  res.sendfile(__dirname + '/public/index.html');
+});
 
 // Start server
-app.listen(process.env.PORT || port);
+app.listen(port);
 console.log('Express server listening on port ' + port);

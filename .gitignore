@@ -51,7 +51,7 @@ Temporary Items
 .apdisk
 
 # App Specific Ignores
-config.json
+/config.json
 public/css/**/*.css
 public/js/**/*.js
 public/fonts/*
