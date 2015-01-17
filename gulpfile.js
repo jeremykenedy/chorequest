@@ -151,3 +151,4 @@ gulp.task('config', function() {
 
 gulp.task('default', ['scripts', 'css', 'fonts']);
 gulp.task('serve', ['connect', 'default', 'watch']);
+gulp.task('deploy', ['test', 'css', 'fonts']);
