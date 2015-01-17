@@ -7,6 +7,17 @@ var gulp = require('gulp'),
     appSrcDir = './app/',
     appBuildDir = './public/';
 
+gulp.task('test', ['scripts'], function () {
+    return gulp.src('not-found.js')
+    .pipe(plugins.karma({
+        configFile: 'karma.conf.js',
+        action: 'run'
+    }))
+    .on('error', function (err) {
+        throw err;
+    });
+});
+
 gulp.task('css', ['vendorCSS'], function () {
     return gulp.src(appSrcDir + 'app.less')
         .pipe(plugins.less())
