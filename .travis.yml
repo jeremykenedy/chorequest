@@ -2,6 +2,9 @@ language: node_js
 node_js:
 - '0.11'
 - '0.10'
+before_script:
+  - npm install -g gulp
+script: gulp test
 deploy:
   provider: heroku
   api_key:
@@ -10,6 +13,7 @@ deploy:
       master: chorequest
   on:
     repo: kenhowardpdx/chorequest
+  skip_cleanup: true
 branches:
   only:
     - master
