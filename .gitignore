@@ -59,3 +59,4 @@ public/images/app/*.jpg
 public/images/app/*.png
 public/images/app/*.gif
 public/index.html
+Procfile
