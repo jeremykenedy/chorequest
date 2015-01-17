@@ -10,6 +10,7 @@ deploy:
       master: chorequest
   on:
     repo: kenhowardpdx/chorequest
+  skip_cleanup: true
 branches:
   only:
     - master
