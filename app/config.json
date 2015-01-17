@@ -1,0 +1,9 @@
+{
+    "name": "site-config",
+    "deps": ["ngRoute", "ngAria", "ngMaterial", "ngAnimate", "ngMessages", "templates", "satellizer"],
+    "constants": {
+        "CONFIG": {
+            "siteName": "Chore Quest"
+        }
+    }
+}
