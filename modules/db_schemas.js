@@ -42,6 +42,12 @@ self.userSchema.pre('save', function(next) {
     });
 });
 
+self.userSchema.methods.comparePassword = function (password, done) {
+    bcrypt.compare(password, this.password, function(err, isMatch) {
+        done(err, isMatch);
+    });
+};
+
 self.accountSchema = new mongoose.Schema({
     account_id: { type: Number, required: true, index: { unique: true } },
     createDate: { type: Date, required: true },

@@ -25,6 +25,7 @@
   "homepage": "https://github.com/kenhowardpdx/chorequest",
   "dependencies": {
     "bcrypt": "^0.8.0",
+    "body-parser": "^1.10.1",
     "del": "^1.1.1",
     "event-stream": "^3.2.1",
     "express": "^4.10.6",
@@ -50,7 +51,9 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "lodash": "^2.4.1",
     "mkdirp": "^0.5.0",
+    "moment": "^2.9.0",
     "mongoose": "^3.8.21",
+    "multer": "^0.1.7",
     "nconf": "^0.7.1",
     "newrelic": "^1.14.6",
     "path": "^0.4.9",
