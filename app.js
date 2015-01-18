@@ -51,8 +51,8 @@ app.get('/accounts/:id', auth, api.accounts.getAccountByID);
 app.get('/accounts/:id/users', auth, api.accounts.getAccountUsers);
 app.get('/accounts/user/:username', auth, api.accounts.getAccountByUsername);
 app.get('/users', auth, api.users.getUsers);
-app.get('/users/:username', auth, api.users.getUser);
 app.get('/users/current', auth, api.users.getCurrentUser);
+app.get('/users/:username', auth, api.users.getUser);
 app.post('/auth', api.users.authenticateUser);
 
 // Static Routes

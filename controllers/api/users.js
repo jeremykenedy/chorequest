@@ -13,7 +13,7 @@ var TOKEN_SECRET = c.get('TOKEN_SECRET');
 
 self.getCurrentUser = function (req, res) {
     db.getItem('Accounts', { "users.username": req.user }, function(err, data) {
-        user = getSingleUser(data, req.user);
+        var user = getSingleUser(data, req.user);
         var users = {
             users: [user]
         };
