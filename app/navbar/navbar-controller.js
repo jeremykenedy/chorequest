@@ -4,10 +4,13 @@
     angular.module('app')
         .controller('NavController', NavController);
 
-    NavController.$inject = [];
+    NavController.$inject = ['$mdSidenav'];
 
-    function NavController () {
+    function NavController ($mdSidenav) {
         var self = this;
+        self.toggleNav = function (menu) {
+            $mdSidenav(menu).toggle();
+        };
     }
-    
+
 })();

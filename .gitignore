@@ -55,8 +55,9 @@ Temporary Items
 public/css/**/*.css
 public/js/**/*.js
 public/fonts/*
-public/images/app/*.jpg
-public/images/app/*.png
-public/images/app/*.gif
+public/img/app/*.jpg
+public/img/app/*.png
+public/img/app/*.gif
+public/img/icons
 public/index.html
 Procfile

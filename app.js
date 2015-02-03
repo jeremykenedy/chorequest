@@ -1,4 +1,4 @@
-'use strict';	
+'use strict';
 
 // Dependencies
 var express = require('express'),
@@ -57,7 +57,7 @@ app.post('/auth', api.users.authenticateUser);
 
 // Static Routes
 app.use("/js", express.static(__dirname + '/public/js'));
-app.use("/images", express.static(__dirname + '/public/images'));
+app.use("/img", express.static(__dirname + '/public/img'));
 app.use("/css", express.static(__dirname + '/public/css'));
 app.use("/fonts", express.static(__dirname + '/public/fonts'));
 

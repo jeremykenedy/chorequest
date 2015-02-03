@@ -2,27 +2,30 @@
     'use strict';
 
     angular.module('app', ['site-config'])
-        .config(['$routeProvider', '$locationProvider', '$authProvider', function ($routeProvider, $locationProvider) {
+        .config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function ($routeProvider, $locationProvider, $mdThemingProvider) {
+
+            $mdThemingProvider.setDefaultTheme('purple');
+
             $routeProvider
-            .when('/', {
-                templateUrl: 'home/home.html',
-                controller: 'HomeCtrl',
-                controllerAs: 'vm',
-                title: 'Home'
-            })
-            .when('/login', {
-                templateUrl: 'login/login.html',
-                controller: 'LoginController',
-                controllerAs: 'vm',
-                title: 'Login'
-            })
-            .when('/404', {
-                template: '<h2>Page Not Found</h2>',
-                title: 'Page Not Found'
-            })
-            .otherwise({
-                redirectTo: '/404'
-            });
+                .when('/', {
+                    templateUrl: 'home/home.html',
+                    controller: 'HomeCtrl',
+                    controllerAs: 'vm',
+                    title: 'Home'
+                })
+                .when('/login', {
+                    templateUrl: 'login/login.html',
+                    controller: 'LoginController',
+                    controllerAs: 'vm',
+                    title: 'Login'
+                })
+                .when('/404', {
+                    template: '<h2>Page Not Found</h2>',
+                    title: 'Page Not Found'
+                })
+                .otherwise({
+                    redirectTo: '/404'
+                });
 
             $locationProvider.html5Mode({
                 enabled: true,

@@ -8,11 +8,31 @@
     <link href="css/lib.css" rel="stylesheet" />
     <link href="css/app.css" rel="stylesheet" />
 </head>
-<body>
+<body layout="row">
+    <md-sidenav layout="column" style="overflow: hidden; display: flex;" class="md-sidenav-left md-whiteframe-z2" md-component-id="left" md-is-locked-open="$media('gt-md')">
+        <md-toolbar>
+          <h1 class="md-toolbar-tools">{{siteName}}</h1>
+        </md-toolbar>
+        <md-content>
+            <nav>
+                <ul>
+                    <li>
+                        <md-button href="/test">Label</md-button>
+                    </li>
+                </ul>
+            </nav>
+        </md-content>
+    </md-sidenav>
 
-    <ng-include src="'navbar/navbar.html'" ng-controller="NavController as nav"></ng-include>
-    
-    <div class="container main" ng-view=""></div>
+    <div layout="column" md-theme="cyan" layout-fill>
+        <md-toolbar layout="row" ng-controller="NavController as nav">
+            <button ng-click="nav.toggleNav('left')" hide-gt-sm class="menu-icon" aria-label="Toggle Menu">
+                <md-icon icon="/img/icons/navigation/svg/design/ic_menu_24px.svg"></md-icon>
+            </button>
+            <h1 class="md-toolbar-tools">{{pageTitle}}</h1>
+        </md-toolbar>
+        <md-content class="md-padding md-default-theme" md-scroll-y ng-view flex></md-content>
+    </div>
 
     <!-- vendor:js -->
     <!-- endinject -->

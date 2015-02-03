@@ -27,7 +27,7 @@ gulp.task('css', ['vendorCSS'], function () {
 
 gulp.task('vendorCSS', ['vendorFonts'], function () {
     //concatenate vendor CSS files
-    return gulp.src(['./bower_components/angular-material/angular-material.css'])
+    return gulp.src(['./bower_components/angular-material/angular-material.css', './bower_components/angular-material/themes/purple-theme.css', './bower_components/angular-material/themes/cyan-theme.css'])
         .pipe(plugins.concat('lib.css'))
         .pipe(gulp.dest(appBuildDir + 'css/'));
 });
@@ -38,8 +38,12 @@ gulp.task('vendorFonts', ['clean:css'], function () {
         .pipe(gulp.dest(appBuildDir + 'fonts/'));
 });
 
-gulp.task('fonts', function () {
-
+gulp.task('icons', function () {
+    return gulp.src([
+        './bower_components/material-design-icons/**/*.{svg,png,css,html}',
+        '!./bower_components/material-design-icons/index.html'],
+        { base: './bower_components/material-design-icons/' })
+        .pipe(gulp.dest(appBuildDir + 'img/icons/'));
 });
 
 gulp.task('copy-index', ['clean:js'], function () {
@@ -149,6 +153,6 @@ gulp.task('config', function() {
         .pipe(gulp.dest(appBuildDir + 'js'));
 });
 
-gulp.task('default', ['scripts', 'css', 'fonts']);
+gulp.task('default', ['scripts', 'css']);
 gulp.task('serve', ['connect', 'default', 'watch']);
-gulp.task('deploy', ['test', 'css', 'fonts']);
+gulp.task('deploy', ['test', 'css']);
