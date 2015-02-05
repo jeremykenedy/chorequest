@@ -3,6 +3,6 @@
 
     angular.module('app')
         .controller('HomeCtrl', [function () {
-
+            var self = this;
         }]);
 })();

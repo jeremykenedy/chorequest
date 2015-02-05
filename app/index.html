@@ -17,16 +17,16 @@
             <nav>
                 <ul>
                     <li>
-                        <md-button href="/test">Label</md-button>
+                        <md-button href="/login">Login</md-button>
                     </li>
                 </ul>
             </nav>
         </md-content>
     </md-sidenav>
 
-    <div layout="column" md-theme="cyan" layout-fill>
-        <md-toolbar layout="row" ng-controller="NavController as nav">
-            <button ng-click="nav.toggleNav('left')" hide-gt-sm class="menu-icon" aria-label="Toggle Menu">
+    <div layout="column" layout-fill>
+        <md-toolbar layout="row">
+            <button ng-click="app.toggleNav('left')" hide-gt-sm class="menu-icon" aria-label="Toggle Menu">
                 <md-icon icon="/img/icons/navigation/svg/design/ic_menu_24px.svg"></md-icon>
             </button>
             <h1 class="md-toolbar-tools">{{pageTitle}}</h1>

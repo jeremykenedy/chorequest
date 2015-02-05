@@ -4,14 +4,12 @@
     angular.module('app', ['site-config'])
         .config(['$routeProvider', '$locationProvider', '$mdThemingProvider', function ($routeProvider, $locationProvider, $mdThemingProvider) {
 
-            $mdThemingProvider.setDefaultTheme('purple');
-
             $routeProvider
                 .when('/', {
                     templateUrl: 'home/home.html',
                     controller: 'HomeCtrl',
                     controllerAs: 'vm',
-                    title: 'Home'
+                    title: 'Chore Quest | Changin the way kids get things done'
                 })
                 .when('/login', {
                     templateUrl: 'login/login.html',

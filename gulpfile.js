@@ -27,7 +27,7 @@ gulp.task('css', ['vendorCSS'], function () {
 
 gulp.task('vendorCSS', ['vendorFonts'], function () {
     //concatenate vendor CSS files
-    return gulp.src(['./bower_components/angular-material/angular-material.css', './bower_components/angular-material/themes/purple-theme.css', './bower_components/angular-material/themes/cyan-theme.css'])
+    return gulp.src(['./bower_components/angular-material/angular-material.css', './bower_components/angular-material/themes/purple-theme.css', './bower_components/angular-material/themes/light-green-theme.css'])
         .pipe(plugins.concat('lib.css'))
         .pipe(gulp.dest(appBuildDir + 'css/'));
 });
