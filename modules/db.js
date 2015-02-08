@@ -9,7 +9,7 @@ var self = this,
 c.env().file({ file: 'config.json'});
 
 var uristring = c.get('MONGOLAB_URI'),
-    schema_version = 1;
+    schemaVersion = 1;
 
 // Models
 self.models = {
@@ -65,28 +65,28 @@ var seeded = false;
 function seedDB () {
     if(!seeded) {
         seeded = true;
-        self.getItem('Roles', { "role_id": 1 }, function (err, response) {
+        self.getItem('Roles', { 'roleId': 1 }, function (err, response) {
             if(err) {
                 var seedRole = new self.models.Roles({
-                    role_id: 1,
+                    roleId: 1,
                     name: 'admin',
                     permissions: -1,
-                    schema_version: schema_version
+                    schemaVersion: schemaVersion
                 });
 
                 var seedAccount = new self.models.Accounts({
-                    account_id: 1,
+                    accountId: 1,
                     createDate: new Date(),
                     active: true,
                     users: [
                         {
-                            user_id: 1,
+                            userId: 1,
                             username: 'admin',
                             password: 'password',
-                            role_id: 1
+                            roleId: 1
                         }
                     ],
-                    schema_version: schema_version
+                    schemaVersion: schemaVersion
                 });
                 seedRole.save(function (err) {
                     if(!err) {
@@ -102,7 +102,7 @@ function seedDB () {
                     }
                 });
             } else {
-                console.log('seed data exists')
+                console.log('seed data exists');
             }
         });
     }

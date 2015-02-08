@@ -1,0 +1,12 @@
+{
+    "extends"       : "../.jshintrc",
+    "browser"       : true,
+    "jasmine"       : true,
+    "jquery"        : true,
+    "globals"       : {
+        "_"                    : false,
+        "$"                    : false,
+        "angular"              : false,
+        "browser"              : false
+    }
+}

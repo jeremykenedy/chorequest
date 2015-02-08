@@ -6,16 +6,9 @@
     "immed"         : true,
     "newcap"        : true,
     "quotmark"      : "single",
-    "browser"       : true,
     "devel"         : true,
-    "jasmine"       : true,
-    "jquery"        : true,
-    
+
     "globals"   : {
-        "_"                    : false,
-        "$"                    : false,
-        "angular"              : false,
-        "browser"              : false,
         "repeater"             : false,
         "element"              : false,
         "inject"               : false,
