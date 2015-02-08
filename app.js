@@ -1,3 +1,4 @@
+/* jshint node: true */
 'use strict';
 
 // Dependencies
@@ -55,15 +56,17 @@ app.get('/users/current', auth, api.users.getCurrentUser);
 app.get('/users/:username', auth, api.users.getUser);
 app.post('/auth', api.users.authenticateUser);
 
+app.get('/mail', api.mail.send);
+
 // Static Routes
-app.use("/js", express.static(__dirname + '/public/js'));
-app.use("/img", express.static(__dirname + '/public/img'));
-app.use("/css", express.static(__dirname + '/public/css'));
-app.use("/fonts", express.static(__dirname + '/public/fonts'));
+app.use('/js', express.static(__dirname + '/public/js'));
+app.use('/img', express.static(__dirname + '/public/img'));
+app.use('/css', express.static(__dirname + '/public/css'));
+app.use('/fonts', express.static(__dirname + '/public/fonts'));
 
 // Angular Routes
-app.use("/", express.static(__dirname + '/public/index.html'));
-app.use("/*", express.static(__dirname + '/public/index.html'));
+app.use('/', express.static(__dirname + '/public/index.html'));
+app.use('/*', express.static(__dirname + '/public/index.html'));
 
 // Start server
 app.listen(port);
