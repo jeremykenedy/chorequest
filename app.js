@@ -53,7 +53,7 @@ app.get('/accounts/user/:username', auth, api.accounts.getAccountByUsername);
 app.get('/users', auth, api.users.getUsers);
 app.get('/users/current', auth, api.users.getCurrentUser);
 app.get('/users/:username', auth, api.users.getUser);
-app.post('/auth', api.users.authenticateUser);
+app.post('/auth/login', api.users.authenticateUser); // Takes username and password
 
 // Static Routes
 app.use("/js", express.static(__dirname + '/public/js'));

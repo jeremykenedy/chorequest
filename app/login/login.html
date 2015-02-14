@@ -1,17 +1,13 @@
-<form class="form" method="post" ng-submit="vm.login()" name="loginForm">
-
-    <div>
+<section layout="row" layout-sm="column" ng-form="loginForm">
+    <md-input-container>
         <label>Username</label>
-        <input type="text" ng-model="username" />
-    </div>
-    <div>
+        <input type="text" ng-model="vm.username" required>
+    </md-input-container>
+    <md-input-container>
         <label>Password</label>
-        <input type="password" ng-model="password" />
-    </div>
-    <div>
-        <button type="submit">Log in</button>
-    </div>
-
-    <div class="alert">{{vm.message}}</div>
-
-</form>
+        <input type="password" ng-model="vm.password" required>
+    </md-input-container>
+</section>
+<section layout="row" layout-sm="column">
+    <md-button class="md-raised md-primary" ng-click="vm.login()">Login</md-button>
+</section>

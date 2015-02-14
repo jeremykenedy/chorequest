@@ -17,7 +17,11 @@
                     self.message = 'success';
                 })
                 .catch(function (response) {
-                    self.message = response.data.message + '!';
+                    if(response.data && response.data.message) {
+                        self.message = response.data.message + '!';
+                    } else {
+                        console.log(response);
+                    }
                 });
         };
     }
