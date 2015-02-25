@@ -9,7 +9,7 @@
                     templateUrl: 'home/home.html',
                     controller: 'HomeCtrl',
                     controllerAs: 'vm',
-                    title: 'Chore Quest | Changin the way kids get things done'
+                    title: 'Chore Quest | Changing the way kids get things done'
                 })
                 .when('/login', {
                     templateUrl: 'login/login.html',
