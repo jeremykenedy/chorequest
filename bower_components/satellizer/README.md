@@ -1,17 +1,17 @@
 ![Project Logo](https://lh6.googleusercontent.com/-YmfKZZLZKL0/U-KVPFSbiOI/AAAAAAAAEZA/maoYT8iJCnA/w1089-h513-no/sshot-1.png)
 
-# [Satellizer](https://github.com/sahat/satellizer/) 
-[![Build Status](http://img.shields.io/travis/sahat/satellizer.svg?style=flat)](https://travis-ci.org/sahat/satellizer) 
-[![Code Climate](http://img.shields.io/codeclimate/github/sahat/satellizer.svg?style=flat)](https://codeclimate.com/github/sahat/satellizer) 
+# [Satellizer](https://github.com/sahat/satellizer/)
+[![Build Status](http://img.shields.io/travis/sahat/satellizer.svg?style=flat)](https://travis-ci.org/sahat/satellizer)
+[![Code Climate](http://img.shields.io/codeclimate/github/sahat/satellizer.svg?style=flat)](https://codeclimate.com/github/sahat/satellizer)
 [![Test Coverage](http://img.shields.io/codeclimate/coverage/github/sahat/satellizer.svg?style=flat)](https://codeclimate.com/github/sahat/satellizer)
-[![Version](http://img.shields.io/badge/version-0.8.8-orange.svg?style=flat)](https://www.npmjs.org/package/satellizer)
+[![Version](http://img.shields.io/badge/version-0.9.2-orange.svg?style=flat)](https://www.npmjs.org/package/satellizer)
 
-**:space_invader: Live Demo:** [https://satellizer.herokuapp.com](https://satellizer.herokuapp.com)
+**Live Demo:** [https://satellizer.herokuapp.com](https://satellizer.herokuapp.com)
 
-**Satellizer** is a simple to use, end-to-end, token-based authentication module 
+**Satellizer** is a simple to use, end-to-end, token-based authentication module
 for [AngularJS](http://angularjs.org) with built-in support for Google, Facebook,
-LinkedIn, Twitter authentication providers, plus Email and Password sign-in 
-method. You are not limited to the sign-in options above, in fact you can add
+LinkedIn, Twitter, Yahoo, Windows Live authentication providers, as well as Email and Password
+sign-in. You are not limited to the sign-in options above, in fact you can add
 any *OAuth 1.0* or *OAuth 2.0* provider by passing provider-specific information
 during the configuration step.
 
@@ -31,7 +31,7 @@ during the configuration step.
 
 ## Installation
 
-The easiest way to get **Satellizer** is by running one of the following 
+The easiest way to get **Satellizer** is by running one of the following
 commands:
 
 ```bash
@@ -46,7 +46,7 @@ npm install satellizer
 or use the CDN:
 
 ```html
-<script src="//cdn.jsdelivr.net/satellizer/0.8.8/satellizer.min.js"></script>
+<script src="//cdn.jsdelivr.net/satellizer/0.9.2/satellizer.min.js"></script>
 ```
 
 ## Usage
@@ -55,19 +55,19 @@ or use the CDN:
 ```js
 angular.module('MyApp', ['satellizer'])
   .config(function($authProvider) {
-    
+
     $authProvider.facebook({
       clientId: '624059410963642'
     });
-    
+
     $authProvider.google({
       clientId: '631036554609-v5hm2amv4pvico3asfi97f54sc51ji4o.apps.googleusercontent.com'
     });
-    
+
     $authProvider.github({
       clientId: '0ba2600b1dbdb756688b'
     });
-    
+
     $authProvider.linkedin({
       clientId: '77cw786yignpzj'
     });
@@ -91,7 +91,7 @@ angular.module('MyApp', ['satellizer'])
       clientId: 'MTCEJ3NGW2PNNB31WOSBFDSAD4MTHYVAZ1UKIULXZ2CVFC2K',
       authorizationEndpoint: 'https://foursquare.com/oauth2/authenticate',
     });
-    
+
   });
 ```
 
@@ -99,11 +99,11 @@ angular.module('MyApp', ['satellizer'])
 ```js
 angular.module('MyApp')
   .controller('LoginCtrl', function($scope, $auth) {
-    
+
     $scope.authenticate = function(provider) {
       $auth.authenticate(provider);
     };
-    
+
   });
 ```
 
@@ -119,7 +119,7 @@ angular.module('MyApp')
 <button ng-click="authenticate('live')">Sign in with Windows Live</button>
 ```
 
-**:exclamation: Note:** For server-side usage please refer to the [examples](https://github.com/sahat/satellizer/tree/master/examples/server)
+**Note:** For server-side usage please refer to the [examples](https://github.com/sahat/satellizer/tree/master/examples/server)
 directory.
 
 ## Configuration
@@ -127,6 +127,7 @@ directory.
 Below is a complete listing of all default configuration options.
 
 ```js
+$authProvider.httpInterceptor = true, // Add Authorization header to HTTP request
 $authProvider.loginOnSignup = true;
 $authProvider.loginRedirect = '/';
 $authProvider.logoutRedirect = '/';
@@ -135,10 +136,13 @@ $authProvider.loginUrl = '/auth/login';
 $authProvider.signupUrl = '/auth/signup';
 $authProvider.loginRoute = '/login';
 $authProvider.signupRoute = '/signup';
+$authProvider.tokenRoot = false; // set the token parent element if the token is not the JSON root
 $authProvider.tokenName = 'token';
 $authProvider.tokenPrefix = 'satellizer'; // Local Storage name prefix
 $authProvider.unlinkUrl = '/auth/unlink/';
+$authProvider.unlinkMethod = 'get';
 $authProvider.authHeader = 'Authorization';
+$authProvider.withCredentials = true; // Send POST request with credentials
 
 // Facebook
 $authProvider.facebook({
@@ -200,7 +204,7 @@ $authProvider.github({
 });
 
 // Windows Live
-$authProvider.live: {
+$authProvider.live({
   url: '/auth/live',
   authorizationEndpoint: 'https://login.live.com/oauth20_authorize.srf',
   redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
@@ -210,7 +214,18 @@ $authProvider.live: {
   display: 'popup',
   type: '2.0',
   popupOptions: { width: 500, height: 560 }
-}
+});
+
+// Yahoo
+$authProvider.yahoo({
+  url: '/auth/yahoo',
+  authorizationEndpoint: 'https://api.login.yahoo.com/oauth2/request_auth',
+  redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
+  scope: [],
+  scopeDelimiter: ',',
+  type: '2.0',
+  popupOptions: { width: 559, height: 519 }
+});
 
 // OAuth 2.0
 $authProvider.oauth2({
@@ -222,6 +237,7 @@ $authProvider.oauth2({
   redirectUri: null,
   popupOptions: null,
   authorizationEndpoint: null,
+  responseParams: null,
   requiredUrlParams: null,
   optionalUrlParams: null,
   defaultUrlParams: ['response_type', 'client_id', 'redirect_uri'],
@@ -236,7 +252,7 @@ $authProvider.oauth1({
 });
 ```
 
-**:exclamation: Note:** If for some reason you are unable to send a token to
+**Note:** If for some reason you are unable to send a token to
 your server in the following format - `Authorization: Bearer <token>`, then use
 `$authProvider.authHeader` method to override this behavior, e.g. set its value to
 **x-access-token** or another custom header that your backend may require.
@@ -263,14 +279,14 @@ your server in the following format - `Authorization: Bearer <token>`, then use
   </tbody>
 </table>
 
-**:exclamation: Note:** If you stumble upon a browser version that does not work with *Satellizer* please [open an issue](https://github.com/sahat/satellizer/issues) so I could update the checkmark with the lowest supported version.
+**Note:** If you stumble upon a browser version that does not work with *Satellizer* please [open an issue](https://github.com/sahat/satellizer/issues) so I could update the checkmark with the lowest supported version.
 
 
 ## How It Works
 
 **Satellizer** relies on *token-based authentication* using
-[JSON Web Tokens](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/) 
-instead of cookies. Each **Wiki** link below goes in-depth into how the 
+[JSON Web Tokens](https://auth0.com/blog/2014/01/07/angularjs-authentication-with-cookies-vs-token/)
+instead of cookies. Each **Wiki** link below goes in-depth into how the
 authentication process works.
 
 - [Login with OAuth 2.0](https://github.com/sahat/satellizer/wiki/Login-with-OAuth-2.0)
@@ -279,7 +295,7 @@ authentication process works.
 - [Signup](https://github.com/sahat/satellizer/wiki/Signup)
 - [Logout](https://github.com/sahat/satellizer/wiki/Logout)
 
-**:bulb: Note:** To learn more about JSON Web Token (JWT) visit [JWT.io](http://jwt.io/).
+**Note:** To learn more about JSON Web Token (JWT) visit [JWT.io](http://jwt.io/).
 
 ## Obtaining OAuth Keys
 
@@ -293,8 +309,7 @@ authentication process works.
  - **Authorized Javascript origins**: *http://localhost:3000*
  - **Authorized redirect URI**: *http://localhost:3000*
 
-**:exclamation: Note:** Make sure you have turned on **Contacts API** and 
-**Google+ API** in the *APIs* tab.
+**Note:** Make sure you have turned on **Contacts API** and **Google+ API** in the *APIs* tab.
 
 <hr>
 
@@ -365,7 +380,7 @@ $auth.login({
 });
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -391,7 +406,7 @@ $auth.signup({
 });
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -416,7 +431,7 @@ $auth.authenticate('google').then(function(response) {
 });
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -430,7 +445,7 @@ Deletes a JWT from Local Storage.
 $auth.logout();
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -438,7 +453,7 @@ $auth.logout();
 
 Returns `true` if a JWT is present in Local Storage and it is not expired, otherwise returns `false`.
 
-**:exclamation: Note:** This method expects the [exp](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#expDef)
+**Note:** This method expects the [exp](http://self-issued.info/docs/draft-ietf-oauth-json-web-token.html#expDef)
 claim to check for the expiration time.
 
 #### Usage
@@ -474,7 +489,7 @@ via `$authProvider.oauth1()` or `$authProvider.oauth2()` methods.
 - **userData** - Optional object for sending additional data to the server along with
 `code`, `clientId`, `redirectUri` (OAuth 2.0) or `oauth_token`, `oauth_verifier` (OAuth 1.0).
 
-**:bulb: Note:** Linking accounts business logic is handled entirely on the server.
+**Note:** Linking accounts business logic is handled entirely on the server.
 
 #### Usage
 
@@ -482,7 +497,7 @@ via `$authProvider.oauth1()` or `$authProvider.oauth2()` methods.
 $auth.link('github');
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -493,7 +508,10 @@ Unlinks an OAuth provider from the signed-in account. It sends a GET request to 
 - **provider** - One of the built-in provider names or a custom provider name created
 via `$authProvider.oauth1()` or `$authProvider.oauth2()` methods.
 
-**:bulb: Note:** You can override the default *unlink path* above via `$authProvider.unlinkUrl` configuration property.
+**Note:** You can override the default *unlink path* above via `$authProvider.unlinkUrl` configuration property.
+
+**Note:** It uses `GET` method by default, but can be changed via `$authProvider.unlinkMethod = 'post'`. If you are going
+to use `POST`, **provider** obviously should be an object, not a string.
 
 #### Usage
 
@@ -501,7 +519,7 @@ via `$authProvider.oauth1()` or `$authProvider.oauth2()` methods.
 $auth.unlink('github');
 ```
 
-**:hourglass: Note:** This method returns a promise.
+**Note:** This method returns a promise.
 
 <hr>
 
@@ -531,12 +549,12 @@ $auth.getPayload();
 
 <hr>
 
-#### `$auth.setToken(token, [isLinking])`
+#### `$auth.setToken(token, [redirect])`
 
-Saves a JWT or an access token to Local Storage. *It is mostly used internally.*
+Saves a JWT or an access token to Local Storage. *It uses `shared.setToken` internally.*
 
 - **token** - An object that takes a JWT (`response.data[config.tokenName]`) or an access token (`response.access_token`).
-- **isLinking** - An optional boolean value that controls whether or not to redirect to `loginRedirect` route after saving a token. Defaults to `false`.
+- **redirect** - An optional boolean value that controls whether or not to redirect to `loginRedirect` route after saving a token. Defaults to `false`.
 
 <hr>
 
@@ -580,11 +598,11 @@ and [torii](https://github.com/Vestorly/torii) and [angular-oauth](https://githu
 
 The MIT License (MIT)
 
-Copyright (c) 2014-2015 Sahat Yalkabov
+Copyright (c) 2015 Sahat Yalkabov
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of 
-this software and associated documentation files (the "Software"), to deal in 
-the Software without restriction, including without limitation the rights to 
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
 use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
 the Software, and to permit persons to whom the Software is furnished to do so,
 subject to the following conditions:
@@ -592,9 +610,9 @@ subject to the following conditions:
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR 
-COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER 
-IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
