@@ -4,9 +4,9 @@
     angular.module('app')
         .controller('LoginController', LoginController);
 
-    LoginController.$inject = ['$auth'];
+    LoginController.$inject = ['$auth', '$mdToast'];
 
-    function LoginController ($auth) {
+    function LoginController ($auth, $mdToast) {
         var self = this;
 
         self.message = '';
@@ -16,12 +16,18 @@
                 .then(function () {
                     self.message = 'success';
                 })
-                .catch(function (response) {
-                    if(response.data && response.data.message) {
-                        self.message = response.data.message + '!';
-                    } else {
-                        console.log(response);
-                    }
+                .catch(function (data) {
+                    self.loginForm.username.$dirty = true;
+                    self.loginForm.username.$invalid = true;
+                    self.username = '';
+                    self.loginForm.password.$dirty = true;
+                    self.loginForm.password.$invalid = true;
+                    self.password = '';
+                    $mdToast.show(
+                      $mdToast.simple()
+                        .content('Invalid Credentials')
+                        .hideDelay(3000)
+                    );
                 });
         };
     }

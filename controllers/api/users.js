@@ -56,22 +56,30 @@ self.authenticateUser = function (req, res) {
     var username = req.body.username,
         password = req.body.password;
     db.getItem('Accounts', { "users.username": getUserExp(username) }, function (err, data) {
-        if (err || !data) {
+        if (err) {
             var msg = {
-                status: 'fail',
-                message: 'Error Retrieving User',
-                error: err,
-                req: req.params
+                errors: [{
+                    status: '500',
+                    title: 'Something Went Wrong',
+                    message: err
+                }]
             };
             return res.json(msg);
         }
-        var user = getSingleUser(data, username);
-        user.comparePassword(password, function(err, isMatch) {
-            if (!isMatch) {
-                return res.status(401).send({ message: 'Wrong username and/or password' });
-            }
-            res.send({ token: createToken(user) });
-        });
+
+        var users = (data && data.users) ? data.users : null;
+
+        var user = getSingleUser(users, username);
+        if (!user) {
+            return invalidUser(res);
+        } else {
+            user.comparePassword(password, function(err, isMatch) {
+                if (!isMatch) {
+                    return invalidUser(res);
+                }
+                res.send({ token: createToken(user) });
+            });
+        }
     });
 };
 
@@ -79,8 +87,8 @@ function getUserExp (username) {
     return new RegExp('^' + username + '$', 'i');
 }
 
-function getSingleUser (data, username) {
-    return _.findWhere(data.users, function (user) {
+function getSingleUser (users, username) {
+    return _.findWhere(users, function (user) {
         return user.username.toLowerCase() === username.toLowerCase();
     });
 }
@@ -92,4 +100,8 @@ function createToken (user) {
         exp: moment().add(14, 'days').unix()
     };
     return jwt.encode(payload, TOKEN_SECRET);
+}
+
+function invalidUser (res) {
+    return res.status(401).send({ message: 'Wrong username and/or password' });
 }
